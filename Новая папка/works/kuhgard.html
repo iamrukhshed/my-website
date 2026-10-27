@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kuhgard.tj — Время путешествовать</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#04060a;--card:#0d1117;--teal:#4fd6cf;--text:#e8edf2;--muted:#8d97a3;--line:rgba(255,255,255,.14);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Montserrat,system-ui,sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+h1,h2{font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.02em;line-height:1.1;margin:0}
+.serif{font-family:Lora,Georgia,serif}
+header{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:calc(14px + env(safe-area-inset-top,0px)) 5vw 14px;transition:background .4s,backdrop-filter .4s}
+header.solid{background:rgba(4,6,10,.8);backdrop-filter:blur(12px)}
+.logo{font-weight:800;letter-spacing:.12em}.logo b{color:var(--teal)}
+nav{display:flex;gap:28px;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+nav a{opacity:.7;padding:6px 0;border-bottom:1px solid transparent;transition:.3s}
+nav a:hover,nav a.on{opacity:1;color:var(--teal);border-color:var(--teal)}
+.burger{display:none;background:none;border:0;color:var(--text);font-size:26px}
+.hero{position:relative;height:100vh;min-height:620px;overflow:hidden}
+.scene{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease,transform 8s ease;transform:scale(1.08)}
+.scene.on{opacity:1;transform:scale(1)}
+.mount{position:absolute;left:-5%;width:110%;bottom:0;transition:transform .2s linear}
+.mount path{transition:fill 1.4s}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),transparent 30%,transparent 55%,var(--bg))}
+.hero-in{position:absolute;z-index:5;left:5vw;top:30vh;max-width:640px}
+.hero-in h1{font-size:clamp(34px,6vw,70px);margin-bottom:22px}
+.hero-in p{font-family:Lora,serif;font-size:15px;line-height:1.7;color:#cfd6de;max-width:460px}
+.swap{animation:swap .9s cubic-bezier(.2,.7,.2,1) both}
+@keyframes swap{from{opacity:0;transform:translateY(30px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.btn{display:inline-flex;align-items:center;gap:10px;margin-top:28px;padding:14px 28px;border:1px solid var(--teal);border-radius:40px;color:var(--teal);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;background:transparent;cursor:pointer;transition:.3s;font-family:inherit}
+.btn:hover{background:var(--teal);color:#04060a;transform:translateY(-2px)}
+.dots{position:absolute;z-index:6;right:4vw;top:34vh;display:flex;flex-direction:column;gap:14px;align-items:flex-end}
+.dots button{background:none;border:0;color:var(--muted);font:600 13px Montserrat;cursor:pointer;display:flex;align-items:center;gap:12px;transition:.3s;padding:2px}
+.dots button::after{content:"";height:1px;width:14px;background:var(--muted);transition:.4s}
+.dots button.on{color:#fff;font-size:18px}.dots button.on::after{width:70px;background:var(--teal)}
+.facts{position:absolute;z-index:5;left:5vw;right:5vw;bottom:5vh;display:grid;grid-template-columns:repeat(3,1fr);gap:30px;padding-top:22px;border-top:1px solid var(--line)}
+.facts div{font-family:Lora,serif;font-size:12px;line-height:1.6;color:var(--muted)}
+.facts b{display:block;font:700 22px Montserrat;color:var(--teal);margin-bottom:4px}
+section{padding:110px 5vw;position:relative}
+.center{text-align:center}
+h2{font-size:clamp(26px,4vw,44px)}
+.sub{color:var(--muted);font-family:Lora,serif;margin:14px auto 0;max-width:520px;line-height:1.7}
+.rv{opacity:0;transform:translateY(50px);transition:opacity .9s,transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.tours{display:flex;gap:18px;margin:56px auto 0;max-width:1200px;height:480px}
+.tour{flex:1;border-radius:14px;position:relative;overflow:hidden;cursor:pointer;border:1px solid var(--line);transition:flex .7s cubic-bezier(.2,.7,.2,1),border-color .4s}
+.tour:hover,.tour.act{flex:2.2;border-color:var(--teal)}
+.tour .bg{position:absolute;inset:0;transition:transform 1s}
+.tour:hover .bg{transform:scale(1.08)}
+.tour::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),transparent 60%)}
+.tour .t{position:absolute;z-index:2;left:20px;right:20px;bottom:22px;text-align:center}
+.tour h3{margin:0 0 8px;font-size:18px;letter-spacing:.05em}
+.tour p{margin:0;font:12px/1.6 Lora,serif;color:#bcc5cf;max-height:0;opacity:0;overflow:hidden;transition:.6s}
+.tour:hover p,.tour.act p{max-height:90px;opacity:1}
+.tour span{display:inline-block;margin-top:10px;font-size:11px;color:var(--teal);letter-spacing:.12em;text-transform:uppercase}
+.discover{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;overflow:hidden;background:radial-gradient(ellipse at 20% 30%,#0b2a24 0,transparent 60%),var(--bg)}
+.discover h2{font-size:clamp(32px,5vw,58px)}
+.watch{display:flex;align-items:center;gap:16px;margin:34px 0;font-size:13px;letter-spacing:.1em;cursor:pointer;background:none;border:0;color:var(--text);font-family:inherit;text-transform:uppercase}
+.play{width:56px;height:56px;border:1.5px solid #fff;border-radius:50%;display:grid;place-items:center;position:relative;transition:.3s}
+.play::before{content:"";border-left:14px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.play::after{content:"";position:absolute;inset:-8px;border:1px solid var(--teal);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{from{transform:scale(.9);opacity:1}to{transform:scale(1.5);opacity:0}}
+.watch:hover .play{background:var(--teal);border-color:var(--teal)}
+blockquote{margin:0;font:italic 14px/1.8 Lora,serif;color:#b9c2cc;max-width:440px}
+.vids{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.vid{aspect-ratio:16/10;border-radius:10px;position:relative;cursor:pointer;overflow:hidden;border:1px solid var(--line);transition:transform .5s,border-color .4s}
+.vid:nth-child(even){transform:translateY(24px)}
+.vid:hover{transform:translateY(-6px) scale(1.04);border-color:var(--teal);z-index:2}
+.vid i{position:absolute;inset:0;margin:auto;width:34px;height:34px;border-radius:50%;border:1.5px solid #fff;background:rgba(0,0,0,.35)}
+.vid i::before{content:"";position:absolute;left:13px;top:9px;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent}
+.contact{max-width:640px;margin:0 auto}
+form{display:grid;gap:14px;margin-top:40px;text-align:left}
+input,select,textarea{width:100%;padding:15px 18px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--text);font:14px Montserrat,sans-serif;transition:border-color .3s,box-shadow .3s}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--teal);box-shadow:0 0 0 3px rgba(79,214,207,.15)}
+.ok{display:none;color:var(--teal);margin-top:16px;font-family:Lora,serif}
+footer{padding:60px 5vw calc(50px + env(safe-area-inset-bottom,0px));text-align:center;border-top:1px solid var(--line)}
+.soc{display:flex;gap:26px;justify-content:center;margin-bottom:24px}
+.soc a{width:42px;height:42px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--line);color:var(--teal);transition:.3s;font-size:12px;font-weight:700}
+.soc a:hover{background:var(--teal);color:#04060a;transform:translateY(-4px)}
+footer small{color:var(--muted)}
+.modal{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.85);display:grid;place-items:center;opacity:0;pointer-events:none;transition:.4s;padding:20px}
+.modal.open{opacity:1;pointer-events:auto}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:36px;max-width:440px;text-align:center;transform:scale(.9);transition:.4s}
+.modal.open .box{transform:none}
+@media(max-width:860px){
+nav{position:fixed;inset:0;background:rgba(4,6,10,.97);flex-direction:column;justify-content:center;align-items:center;font-size:16px;gap:30px;transform:translateY(-100%);transition:.5s}
+nav.open{transform:none}.burger{display:block;z-index:60}
+.facts{grid-template-columns:1fr;gap:12px;bottom:3vh}.facts div:nth-child(n+2){display:none}
+.dots{top:auto;bottom:24vh;flex-direction:row;right:5vw}.dots button::after{display:none}
+.tours{flex-direction:column;height:auto}.tour{min-height:140px}.tour.act,.tour:hover{min-height:220px}
+.discover{grid-template-columns:1fr}.hero-in{top:24vh}
+}
+</style>
+</head>
+<body>
+<header id="hd">
+  <a href="#top" class="logo">KUH<b>GARD</b>.TJ</a>
+  <nav id="nav">
+    <a href="#top">Главная</a><a href="#about">О нас</a><a href="#tours">Туры</a><a href="#discover">Галерея</a><a href="#contact">Контакты</a>
+  </nav>
+  <button class="burger" id="bg" aria-label="Меню">☰</button>
+</header>
+
+<div class="hero" id="top">
+  <div id="scenes"></div>
+  <div class="hero-in">
+    <h1 id="ht" class="swap"></h1>
+    <p id="hp" class="swap"></p>
+    <a href="#tours" class="btn">Выбрать тур →</a>
+  </div>
+  <div class="dots" id="dots"></div>
+  <div class="facts">
+    <div class="rv in"><b>Горы</b>Фанские горы, Памир и Гиссар — маршруты для любого уровня подготовки.</div>
+    <div class="rv in"><b>Озёра</b>Искандеркуль, Семь озёр, Сарезское озеро — бирюзовая вода среди скал.</div>
+    <div class="rv in"><b>Люди</b>Местные гиды, гостевые дома и настоящее таджикское гостеприимство.</div>
+  </div>
+</div>
+
+<section id="about" class="center">
+  <h2 class="rv">Горы зовут</h2>
+  <p class="sub rv" style="--d:.15s">Kuhgard — «странник по горам». Мы организуем треккинги, джип-туры и культурные путешествия по Таджикистану с местными проводниками.</p>
+</section>
+
+<section id="tours" class="center" style="padding-top:20px">
+  <h2 class="rv">Популярные туры</h2>
+  <p class="sub rv" style="--d:.1s">Наведите или нажмите на карточку — мы расскажем подробнее.</p>
+  <div class="tours" id="tl"></div>
+</section>
+
+<section id="discover" class="discover">
+  <div>
+    <h2 class="rv">Откройте мир по-новому</h2>
+    <button class="watch rv" data-v style="--d:.1s"><span class="play"></span>Смотреть видео</button>
+    <blockquote class="rv" style="--d:.2s">«Вы когда-нибудь слышали лавину в горах? Тишина после неё абсолютна — вы вдруг понимаете, где находитесь, и что это настоящая жизнь».</blockquote>
+  </div>
+  <div class="vids" id="vids"></div>
+</section>
+
+<section id="contact" class="center">
+  <div class="contact">
+    <h2 class="rv">Спланируем путешествие</h2>
+    <p class="sub rv">Оставьте заявку — мы свяжемся с вами и подберём маршрут.</p>
+    <form id="f" class="rv">
+      <input name="n" placeholder="Ваше имя" required>
+      <input name="c" placeholder="Телефон или e-mail" required>
+      <select name="t" id="ts"></select>
+      <textarea name="m" rows="4" placeholder="Даты, количество человек, пожелания"></textarea>
+      <button class="btn" style="justify-content:center;margin:0">Отправить заявку</button>
+    </form>
+    <div class="ok" id="ok">Спасибо! Заявка принята — скоро свяжемся с вами.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="soc"><a href="#" aria-label="Instagram">IG</a><a href="#" aria-label="Facebook">FB</a><a href="#" aria-label="Telegram">TG</a><a href="#" aria-label="WhatsApp">WA</a></div>
+  <small>© 2026 Kuhgard.tj · Душанбе, Таджикистан · +992 XX XXX XX XX · info@kuhgard.tj</small>
+</footer>
+
+<div class="modal" id="md"><div class="box"><h2 style="font-size:22px">Видео скоро</h2><p class="sub">Здесь появится ролик о наших турах. Добавьте ссылку на видео в код.</p><button class="btn" id="mc">Закрыть</button></div></div>
+
+<script>
+var S=[
+{t:"Время путешествовать",p:"Лучшее время для поездки в горы Таджикистана — с июня по сентябрь: снег растаял, тропы открыты, а перевалы доступны.",a:"#1b2a3a",b:"#8a6a55",m:["#1c2733","#0e151d","#05080c"]},
+{t:"Искандеркуль",p:"Горное озеро в Гиссарском хребте на высоте 2195 м. Бирюзовая вода, водопад Искандердарья и тишина вдали от городов.",a:"#0c3b42",b:"#5ea39c",m:["#173238","#0b1c21","#04090b"]},
+{t:"Памирский тракт",p:"Одна из самых высоких автодорог мира. Перевалы, кишлаки, Ваханская долина и виды на пики Гиндукуша.",a:"#3a2230",b:"#d98a5c",m:["#3a2a33","#1d151b","#07050a"]},
+{t:"Семь озёр",p:"Хафткуль в Фанских горах — цепочка озёр разных оттенков, соединённых тропой. Идеально для треккинга на несколько дней.",a:"#0b2f2a",b:"#45b39d",m:["#15302c","#0a1a18","#030807"]},
+{t:"Фанские горы",p:"Альпийские луга, ледники и вершины выше 5000 м. Маршруты для новичков и опытных альпинистов.",a:"#241f3d",b:"#7e72c8",m:["#252340","#13121f","#05050b"]}];
+var T=[
+{n:"Искандеркуль",d:"1–2 дня",p:"Озеро, водопад и ночёвка у воды.",a:"#0c3b42",b:"#7fd1c8"},
+{n:"Семь озёр",d:"3–5 дней",p:"Треккинг по Фанским горам.",a:"#123524",b:"#5aa36f"},
+{n:"Памирский тракт",d:"7–10 дней",p:"Джип-тур через Ваханскую долину.",a:"#3a2230",b:"#e39a62"},
+{n:"Фанские горы",d:"4–6 дней",p:"Перевалы, ледники и альпийские луга.",a:"#241f3d",b:"#8d82d6"}];
+var $=function(s){return document.querySelector(s)};
+var sc=$("#scenes"),dots=$("#dots"),cur=0,timer;
+function peaks(c,y,k){var d="M0 400",x=0,s=k;while(x<=1440){var h=y+((s=(s*9301+49297)%233280)/233280)*90;d+=" L"+x+" "+h;x+=90+(s%60)}return d+" L1440 400Z"}
+S.forEach(function(s,i){
+ var e=document.createElement("div");e.className="scene"+(i?"":" on");
+ e.style.background="linear-gradient(180deg,"+s.a+","+s.b+" 70%)";
+ var sun='<circle cx="'+(300+i*180)+'" cy="'+(170+(i%2)*40)+'" r="46" fill="#fff" opacity=".18"/>';
+ e.innerHTML='<svg class="mount" viewBox="0 0 1440 400" preserveAspectRatio="none" style="height:62%">'+sun+
+ '<path d="'+peaks(0,60,11+i*7)+'" fill="'+s.m[0]+'"/><path d="'+peaks(0,150,31+i*5)+'" fill="'+s.m[1]+'"/><path d="'+peaks(0,250,53+i*3)+'" fill="'+s.m[2]+'"/></svg>';
+ sc.appendChild(e);
+ var b=document.createElement("button");b.textContent="0"+(i+1);b.onclick=function(){go(i,1)};dots.appendChild(b);
+});
+function go(i,manual){
+ cur=i;var ss=sc.children,ds=dots.children;
+ for(var k=0;k<ss.length;k++){ss[k].classList.toggle("on",k==i);ds[k].classList.toggle("on",k==i)}
+ var t=$("#ht"),p=$("#hp");t.classList.remove("swap");p.classList.remove("swap");void t.offsetWidth;
+ t.textContent=S[i].t;p.textContent=S[i].p;t.classList.add("swap");p.classList.add("swap");p.style.animationDelay=".15s";
+ clearInterval(timer);timer=setInterval(function(){go((cur+1)%S.length)},7000);
+}
+go(0);
+var tl=$("#tl"),ts=$("#ts");
+T.forEach(function(x,i){
+ var c=document.createElement("div");c.className="tour rv";c.style.setProperty("--d",i*.12+"s");
+ c.innerHTML='<div class="bg" style="background:linear-gradient(180deg,'+x.a+','+x.b+')"><svg viewBox="0 0 300 480" preserveAspectRatio="none" style="position:absolute;bottom:0;width:100%;height:60%"><path d="'+peaks(0,40,17+i*13).replace(/1440/g,"300").replace(/ L(\d+) /g,function(m,a){return " L"+Math.round(a/4.8)+" "})+'" fill="rgba(0,0,0,.45)"/></svg></div><div class="t"><h3>'+x.n+'</h3><p>'+x.p+' · '+x.d+'</p><span>Заказать →</span></div>';
+ c.onclick=function(){ts.value=x.n;document.getElementById("contact").scrollIntoView()};
+ c.ontouchstart=function(){[].forEach.call(tl.children,function(o){o.classList.remove("act")});c.classList.add("act")};
+ tl.appendChild(c);
+ ts.add(new Option(x.n,x.n));
+});
+ts.add(new Option("Другой маршрут","Другой"));
+var vids=$("#vids");
+for(var i=0;i<6;i++){var v=document.createElement("div");v.className="vid rv";v.dataset.v=1;v.style.setProperty("--d",i*.1+"s");var t=T[i%4];v.style.background="linear-gradient(135deg,"+t.a+","+t.b+")";v.innerHTML="<i></i>";vids.appendChild(v)}
+var md=$("#md");
+document.addEventListener("click",function(e){if(e.target.closest("[data-v]"))md.classList.add("open");if(e.target===md||e.target.id=="mc")md.classList.remove("open")});
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll(".rv").forEach(function(e){io.observe(e)});
+var hd=$("#hd"),links=[].slice.call(document.querySelectorAll("nav a")),secs=links.map(function(a){return document.querySelector(a.getAttribute("href"))});
+addEventListener("scroll",function(){
+ var y=scrollY;hd.classList.toggle("solid",y>60);
+ var m=document.querySelectorAll(".mount");for(var i=0;i<m.length;i++)m[i].style.transform="translateY("+y*.15+"px)";
+ var a=0;secs.forEach(function(s,i){if(s.offsetTop-200<=y)a=i});links.forEach(function(l,i){l.classList.toggle("on",i==a)});
+},{passive:true});
+$("#bg").onclick=function(){$("#nav").classList.toggle("open")};
+links.forEach(function(l){l.onclick=function(){$("#nav").classList.remove("open")}});
+$("#f").onsubmit=function(e){e.preventDefault();this.style.display="none";$("#ok").style.display="block"};
+</script>
+</body>
+</html>
